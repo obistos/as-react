@@ -1,0 +1,102 @@
+{
+    "info": {
+        "_postman_id": "88dd2986-7d1b-4321-8d54-e19a9a5bf478",
+        "name": "Demo - CiaoChow",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Register",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"demo\",\n    \"email\": \"demo@plusnarrative.com\",\n    \"password\": \"demoPassword\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "https://ciaochow.plusnarrative.biz/api/auth/local/register",
+                    "protocol": "https",
+                    "host": ["ciaochow", "plusnarrative", "biz"],
+                    "path": ["api", "auth", "local", "register"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Login",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"identifier\": \"demo@plusnarrative.com\",\n    \"password\": \"demoPassword\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "https://ciaochow.plusnarrative.biz/api/auth/local",
+                    "protocol": "https",
+                    "host": ["ciaochow", "plusnarrative", "biz"],
+                    "path": ["api", "auth", "local"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Chows",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ0ODU3NzIxLCJleHAiOjE2NDc0NDk3MjF9.vgGXR0SZhXZ1ozrkI3_AJFr1dOA1wHLGVg5hi2UIolo",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "https://ciaochow.plusnarrative.biz/api/chows?populate=*",
+                    "protocol": "https",
+                    "host": ["ciaochow", "plusnarrative", "biz"],
+                    "path": ["api", "chows"],
+                    "query": [
+                        {
+                            "key": "populate",
+                            "value": "*"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Image",
+            "request": {
+                "auth": {
+                    "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "https://ciaochow.plusnarrative.biz/uploads/thumbnail_carrots_3_60f5a864c1.jpeg",
+                    "protocol": "https",
+                    "host": ["ciaochow", "plusnarrative", "biz"],
+                    "path": ["uploads", "thumbnail_carrots_3_60f5a864c1.jpeg"]
+                }
+            },
+            "response": []
+        }
+    ]
+}
