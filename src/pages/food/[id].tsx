@@ -21,28 +21,55 @@ const emptyFood = {
     nutrition: ''
 }
 
+type User = {
+    username: string;
+    email: string;
+    token: string;
+}
+
+const emptyUser = {
+    username: '',
+    email: '',
+    token: '',
+}
+
 export default function Food() {
-    const [data, setData] = useState<Food>(emptyFood)
+    const [current, setCurrent] = useState<Food>(emptyFood)
     const [next, setNext] = useState<Food>(emptyFood)
+    const [user, setUser] = useState<User>(emptyUser)
     const router = useRouter()
     const pathname = router.query.id
     const imgURL = publicRuntimeConfig.imgUrl
 
     const getChow = () => {
-        const id = Number(pathname)
-        ApiService.getFood().then((response) => {
-            const food = response.data.find((item: Food) => item.id === id)
-            const next = response.data.find((item: Food) => item.id !== id)
-            if(food) setData(food)
-            if(next) setNext(next)
-        })
+        if(pathname) {
+            const id = Number(pathname)
+            ApiService.getFood().then((response: any) => {
+                const food = response.data.find((item: Food) => item.id === id)
+                const next = response.data.find((item: Food) => item.id !== id)
+                if(food) setCurrent(food)
+                if(next) setNext(next)
+            })
+        }
+        // ApiService.getChows(user.token).then((response: any) => {
+        //     if(response && response.data) {
+        //         const food = response.data.find((item: Food) => item.id === id)
+        //         const next = response.data.find((item: Food) => item.id !== id)
+        //         if(food) setCurrent(food)
+        //         if(next) setNext(next)
+        //     }
+        // })
     }
 
     useEffect(() => {
-        if(pathname) {
-            getChow()
+        const jwt = window.sessionStorage.getItem('jwtToken')
+        if(!jwt || !pathname) {
+            router.push('/login')
+        } else {
+            if(!user.token) setUser(JSON.parse(atob(jwt)))
+            if(user.token) getChow()
         }
-    })
+    }, [user, router])
 
     return (
         <>
@@ -51,7 +78,7 @@ export default function Food() {
             </header>
             <main className='flex h-[calc(100vh-200px)] flex-col bg-white relative mt-[-2rem] rounded-t-[2rem] pt-5'>
                 <div className='flex pl-5'>
-                    <h1 className='text-black font-bold text-lg mb-5'>{data.title}</h1>   
+                    <h1 className='text-black font-bold text-lg mb-5'>{current.title}</h1>   
                     <span className='bg-gray-500 ml-auto order-2 me-5 h-[30px] rounded-[5px]'><HeartIcon height={30} className='text-white' /></span>
                 </div>
                 
@@ -66,12 +93,12 @@ export default function Food() {
                     <div 
                         id="description" 
                         className="tab-panel pl-5 basis-full pe-5 text-black hidden peer-checked/tab-one:block" 
-                        dangerouslySetInnerHTML={{__html: data.description}}>
+                        dangerouslySetInnerHTML={{__html: current.description}}>
                     </div>
                     <div 
                         id="facts" 
                         className="tab-panel pl-5 basis-full pe-5 text-black hidden peer-checked/tab-two:block" 
-                        dangerouslySetInnerHTML={{__html: data.nutrition}}>
+                        dangerouslySetInnerHTML={{__html: current.nutrition}}>
                     </div>
                 </div>
                 <div className="absolute bottom-0 w-full flex text-center mt-5 p-5 rounded-md rounded-t-[2rem] shadow-md shadow-black">

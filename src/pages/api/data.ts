@@ -6,7 +6,6 @@ const { publicRuntimeConfig } = getConfig();
 class ApiService {
   apiURL = publicRuntimeConfig.apiUrl;
   imgURL = publicRuntimeConfig.imgUrl;
-  token = publicRuntimeConfig.token;
   postHeaders = {'Content-Type': 'application/json'};
 
   constructor() {}
@@ -17,12 +16,12 @@ class ApiService {
     return response;
   }
 
-  getChows = async () => {
+  getChows = async (token: string) => {
     const response = await fetch(
         this.apiURL + 'chows?populate*',
         {
             method: 'GET',
-            headers: {'Authorization': 'Bearer ' + this.token}
+            headers: {'Authorization': 'Bearer ' + token}
         }
     )
     return response;

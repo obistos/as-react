@@ -21,7 +21,7 @@ export default function Login() {
     const [formData, setFormData] = useState<Login>(emptyForm);
     
 
-    const isValid = () => formData.username !== '' || formData.password !== '';
+    const isValid = () => formData.username === '' || formData.password === '';
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -33,20 +33,29 @@ export default function Login() {
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
-        ApiService.userLogin(formData)
-        .then((response: any) => {
-            if(response && response.data) {
-                toast.success("Logged in successfully!");
-                setTimeout(() => {
-                    router.push('food/1', { scroll: false });
-                }, 2000);
-            } else if(response && response.error) {
-                toast.success(response.error.message);
-            }
-        })
-        .catch((err: any) => {
-            toast.success(err.error.message);
-        })
+        // ApiService.userLogin(formData)
+        // .then((response: any) => {
+        //     if(response && response.data) {
+        //         const user = response.data;
+        //         window.sessionStorage.setItem('jwtToken', btoa(JSON.stringify(user)))
+        //         toast.success("Logged in successfully!");
+        //         setTimeout(() => {
+        //             router.push('food/1', { scroll: false });
+        //         }, 2000);
+        //     } else if(response && response.error) {
+        //         toast.success(response.error.message);
+        //     }
+        // })
+        // .catch((err: any) => {
+        //     toast.success(err.error.message);
+        // })
+
+        // Bypass code since DB is not working
+        window.sessionStorage.setItem('jwtToken', btoa(JSON.stringify({
+            username: 'obyr',
+            email: 'obedr@example.com',
+            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ0ODU3NzIxLCJleHAiOjE2NDc0NDk3MjF9.vgGXR0SZhXZ1ozrkI3_AJFr1dOA1wHLGVg5hi2UIolo',
+        })))
         toast.success("Logged in successfully!");
         setTimeout(() => {
             router.push('food/1', { scroll: false });

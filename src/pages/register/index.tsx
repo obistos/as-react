@@ -23,7 +23,8 @@ export default function Register() {
     const [formData, setFormData] = useState<Register>(emptyForm);
     const [errors, setErrors] = useState<Register>(emptyForm);
 
-    const isValid = () => errors.username !== '' || errors.email !== '' || errors.password !== '';
+    const hasErrors = () => errors.username !== '' || errors.email !== '' || errors.password !== ''
+    const isIncomplete = () => formData.username === '' || formData.email === '' || formData.password === ''
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -31,29 +32,29 @@ export default function Register() {
             ...formData,
             [name]: value
         });
-        setErrors(validateForm(formData));
+        setErrors(validateForm(name, value));
     }
 
-    const validateForm = (data: Register) => {
+    const validateForm = (name: string, value: string) => {
         const error = {
             username: '',
             email: '',
             password: ''
         };
  
-        if (!data.username.trim()) {
+        if (name === 'username' && !value.trim()) {
             error.username = 'Username is required';
         }
  
-        if (!data.email.trim()) {
+        if (name === 'email' && !value.trim()) {
             error.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+        } else if (name === 'email' && !/\S+@\S+\.\S+/.test(value)) {
             error.email = 'Email is invalid';
         }
  
-        if (!data.password) {
+        if (name === 'password' && !value) {
             error.password = 'Password is required';
-        } else if (data.password.length < 8) {
+        } else if (name === 'password' && value.length < 8) {
             error.password = `Password must be at 
             least 8 characters long`;
         }
@@ -127,7 +128,7 @@ export default function Register() {
                     </div>
 
                     <div className="flex items-center">
-                        <button className="bg-obed-light hover:bg-obed-dark text-white font-bold py-2 px-4 rounded w-full disabled:opacity-50" type="submit" disabled={isValid()}>Register</button>
+                        <button className="bg-obed-light hover:bg-obed-dark text-white font-bold py-2 px-4 rounded w-full disabled:opacity-50" type="submit" disabled={hasErrors() || isIncomplete()}>Register</button>
                     </div>
                     <div className="text-center">
                         <Link className="inline-block align-baseline text-sm text-light hover:text-dark" href="/login">Have an account? <b>Login</b></Link>
