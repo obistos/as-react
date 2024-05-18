@@ -44,3 +44,7 @@ Make sure your readme.md is clear on how to get up and running. You can also add
 It's not required, but add some [tests](https://nextjs.org/docs/app/building-your-application/testing) and [containerise](https://nextjs.org/docs/app/building-your-application/deploying#docker-image) the application if you really want to impress us.
 
 Good luck and please reach out if you have any questions!
+
+## Mock Data
+
+I have added a folder with mock data containing data about the food
