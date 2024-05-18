@@ -47,4 +47,6 @@ Good luck and please reach out if you have any questions!
 
 ## Mock Data
 
-I have added a folder with mock data containing data about the food
+- I have added a folder with mock data containing data about the food
+- I have placed comments to Login and Food page
+- Once the API is correctly configured you can un-comment that code and remove the current code pointing to the mock data
